@@ -3,6 +3,7 @@
 namespace SaagieHiringBundle\Controller;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -52,5 +53,23 @@ class DefaultController extends Controller
         $response = new Response($json);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
+    }
+
+    /**
+     * @Route("/api/human")
+     * @Method("POST")
+     */
+    public function createAction()
+    {
+        return new Response();
+    }
+
+    /**
+     * @Route("/api/human/{id}")
+     * @Method("DELETE")
+     */
+    public function deleteAction()
+    {
+        return new Response();
     }
 }
