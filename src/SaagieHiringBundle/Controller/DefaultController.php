@@ -29,13 +29,26 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/")
+     * @Route("/api/human")
      */
     public function getAllAction()
     {
         $humans = $this->humanRepository->findAll();
 
         $json = $this->serializer->serialize($humans, 'json');
+        $response = new Response($json);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
+     * @Route("/api/human/{id}")
+     */
+    public function getOneAction($id)
+    {
+        $human = $this->humanRepository->find($id);
+
+        $json = $this->serializer->serialize($human, 'json');
         $response = new Response($json);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
