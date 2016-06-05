@@ -2,7 +2,8 @@
 
 namespace SaagieHiringBundle\Controller;
 
-use Doctrine\ODM\MongoDB\DocumentRepository;
+
+use SaagieHiringBundle\Service\HumanService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,15 +19,15 @@ class DefaultController extends Controller
     protected $serializer;
 
     /**
-     * @var DocumentRepository
+     * @var HumanService
      */
-    protected $humanRepository;
+    protected $humanService;
 
     public function setContainer(ContainerInterface $container = null)
     {
         parent::setContainer($container);
         $this->serializer = $this->get('serializer');
-        $this->humanRepository = $this->get('doctrine_mongodb')->getRepository('SaagieHiringBundle:HumanEntity');
+        $this->humanService = $this->get('saagie_hiring.human');
     }
 
     /**
@@ -34,7 +35,7 @@ class DefaultController extends Controller
      */
     public function getAllAction()
     {
-        $humans = $this->humanRepository->findAll();
+        $humans = $this->humanService->getAllHumans();
 
         $json = $this->serializer->serialize($humans, 'json');
         $response = new Response($json);
@@ -47,7 +48,7 @@ class DefaultController extends Controller
      */
     public function getOneAction($id)
     {
-        $human = $this->humanRepository->find($id);
+        $human = $this->humanService->getHuman($id);
 
         $json = $this->serializer->serialize($human, 'json');
         $response = new Response($json);

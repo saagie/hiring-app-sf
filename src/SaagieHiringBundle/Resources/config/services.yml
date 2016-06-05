@@ -1,4 +1,4 @@
 services:
-#    saagie_hiring.example:
-#        class: SaagieHiringBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+    saagie_hiring.human:
+        class: SaagieHiringBundle\Service\HumanService
+        arguments: ["@doctrine_mongodb.odm.document_manager"]
